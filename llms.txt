@@ -1,0 +1,44 @@
+# pptxgen-ts-starter
+
+> Build PowerPoint presentations with JSX + TypeScript using pptxgenjs. Slides are defined as JSX components and compiled into `.pptx` files.
+
+## Project Structure
+
+```
+pptxgen-ts-starter/
+├── scripts/
+│   ├── color-tool.ts        # Color derivation + WCAG contrast (color npm). Run via `npx tsx scripts/color-tool.ts --hex <color> [--lighten|--darken|--gray|--contrast]`
+│   ├── dev-server.ts        # HTTP dev server (localhost:5173)
+│   ├── estimate-text.ts     # Text measurement: word-wrap + measureText (Canvas 2D). Run via `npx tsx scripts/estimate-text.ts [options] "<text>"`
+│   ├── generate-pptx.ts     # CLI build tool (generates .pptx)
+│   └── image-tool.ts        # Image query/resize/crop (sharp). Run via `npx tsx scripts/image-tool.ts --image <path> [--resize <spec>] [--crop <spec>]`
+├── src/
+│   ├── ppt.tsx              # Deck entry — composes all slides into <Deck>
+│   ├── slides/              # One file per slide, numbered by presentation order
+│   ├── components/          # Reusable slide-building primitives.
+│   ├── token/               # colors.ts + typography.ts — design tokens, single source of truth
+│   └── media/images/        # Image assets
+├── web/
+│   └── index.html           # Browser PPTX viewer
+├── .agents/skills/          # Agent skills: pptxgenjsx (component API) + design (workflow + templates & themes)
+├── .deck/                   # Per-deck workspace: brief.md / research.md / outline.md / spec.md
+├── output/                  # Generated .pptx files
+├── package.json
+├── tsconfig.json
+├── llms.txt
+└── AGENTS.md
+```
+
+## Agent Skills
+
+- [pptxgenjsx SKILL.md](.agents/skills/pptxgenjsx/SKILL.md) — Complete skill for creating and editing PPTX slides using JSX + pptxgenjs
+- [design SKILL.md](.agents/skills/design/SKILL.md) — Design workflow (clarify, research decision, outline, spec, compose/visuals as a per-slide coupled phase, QA) and design knowledge (styles, palettes, typography, core/registered layouts, density, narrative)
+- Front door (separate repo) — `npx skills add zythum/pptxgen-ts-starter-skill -g` scaffolds this template, runs `npm install`, then hands off to the two skills above: https://github.com/zythum/pptxgen-ts-starter-skill
+
+## NPM Scripts
+
+- `npm run dev` — Start dev server at localhost:5173
+- `npm run generate` — Build output/presentation.pptx
+- `npm run typecheck` — Type check with tsc (no emit)
+- `npm run lint` — Lint with oxlint
+- `npm run format` — Format with oxfmt
